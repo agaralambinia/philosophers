@@ -26,9 +26,8 @@ void	man_init(t_table *table)
 		man->meals_cnt = 0;
 		man->man_id = i + 1;
 		man->eat_flg = false;
-		place_forks(man, table->forks, i); // TODO
+		place_forks(man, table->forks, i);
 		man->table = table;
-
 	}
 }
 
@@ -38,8 +37,10 @@ void	data_init(t_table *table)
 
 	i = 0;
 	table->end_flg = false;
+	table->men_ready = false;
 	table->forks = ft_malloc(sizeof(t_fork) * table->man_cnt);
 	table->men = ft_malloc(sizeof(t_man) * table->man_cnt);
+	ft_mutex(table->table_mutex, INIT);
 	while (i++ < table->man_cnt)
 	{
 		table->forks[i].fork_id = i;

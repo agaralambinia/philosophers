@@ -1,15 +1,5 @@
 #include "../incs/philosophers.h"
 
-void	*ft_malloc(size_t b)
-{
-	void	*res;
-
-	res = malloc(b);
-	if (res == NULL)
-		ft_exit_error("Malloc error.")
-	return (res);
-}
-
 void	*ft_mutex_error(int status, t_code code)
 {
 	if (status == 0)
@@ -69,7 +59,7 @@ the required scheduling parameters or scheduling policy.");
 		ft_exit_error("The value specified by attr is invalid.");
 }
 
-void	*ft_thread(pthread_t *t, void *(*f)(void *), void *val t_code code)
+void	*ft_thread(pthread_t *t, void *(*f)(void *), void *val, t_code code)
 {
 	if (code == JOIN)
 		ft_thread_error(pthread_join(*t, NULL), code);
