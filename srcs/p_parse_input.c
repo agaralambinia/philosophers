@@ -1,6 +1,6 @@
 #include "../incs/philosophers.h"
 
-const char	validate_input(const char *s)
+const char	*validate_input(const char *s)
 {
 	while ((*s >= 9 && *s <= 13) || *s == 32)
 		s++;
@@ -15,7 +15,7 @@ const char	validate_input(const char *s)
 
 void	parse_input(t_table *table, char **argv)
 {
-	table->man_cnt = (int)ft_atol(validate_input(argv[1]));
+	table->man_cnt = ft_atol(validate_input(argv[1]));
 	table->die_tm = 1000 * ft_atol(validate_input(argv[2]));
 	table->eat_tm = 1000 * ft_atol(validate_input(argv[3]));
 	table->sleep_tm = 1000 * ft_atol(validate_input(argv[4]));

@@ -20,7 +20,7 @@ void	*ft_malloc(size_t b)
 
 	res = malloc(b);
 	if (res == NULL)
-		ft_exit_error("Malloc error.")
+		ft_exit_error("Malloc error.");
 	return (res);
 }
 
@@ -36,4 +36,37 @@ long	ft_get_time(t_time code)
 		return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 	else if (code == USEC)
 		return ((tv.tv_sec * 1000000) + tv.tv_usec);
+	else
+		ft_exit_error("Error: gettimeofday mistake");
+	return (-1);
+}
+
+void ft_usleep(long usec, t_table *table)
+{
+	long	asleep;
+	long	spent;
+	long	left;
+
+	spent = 0;
+	asleep = ft_get_time(MSEC);
+	while (spent < usec)
+	{
+		if (dinner_finished(table))
+			break ;
+		spent = ft_get_time(MSEC) - asleep;
+		left = usec - spent;
+		if (left > 1000)
+			usleep(left / 2);
+		else
+		{
+			while (spent < usec)
+				;
+		}
+	}
+}
+
+void	wait_beginning(t_table *table)
+{
+	while (!ft_read_bool(&table->table_mutex, &table->men_ready))
+		;
 }

@@ -1,6 +1,6 @@
 #include "../incs/philosophers.h"
 
-void	*ft_mutex_error(int status, t_code code)
+void	ft_mutex_error(int status, t_code code)
 {
 	if (status == 0)
 		return ;
@@ -20,7 +20,7 @@ A deadlock would occur if the thread blocked waiting for mutex.");
 		ft_exit_error("Mutex is locked.");
 }
 
-void	*ft_mutex(pthread_mutex_t *m, t_code code)
+void	ft_mutex(pthread_mutex_t *m, t_code code)
 {
 	if (code == LOCK)
 		ft_mutex_error(pthread_mutex_lock(m), code);
@@ -34,7 +34,7 @@ void	*ft_mutex(pthread_mutex_t *m, t_code code)
 		ft_exit_error("Mutex opcode Error.");
 }
 
-void	*ft_thread_error(int status, t_code code)
+void	ft_thread_error(int status, t_code code)
 {
 	if (status == 0)
 		return ;
@@ -59,7 +59,7 @@ the required scheduling parameters or scheduling policy.");
 		ft_exit_error("The value specified by attr is invalid.");
 }
 
-void	*ft_thread(pthread_t *t, void *(*f)(void *), void *val, t_code code)
+void	ft_thread(pthread_t *t, void *(*f)(void *), void *val, t_code code)
 {
 	if (code == JOIN)
 		ft_thread_error(pthread_join(*t, NULL), code);
