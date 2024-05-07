@@ -13,7 +13,7 @@
 # define RESET	"\033[0m"
 # define RED	"\033[1;31m"
 # define PINK	"\033[1;35m"
-# define GREEN	"\03S3[1;32m"
+# define GREEN	"\033[1;32m"
 # define YELLOW	"\033[1;33m"
 # define BLUE	"\033[1;34m"
 
@@ -115,4 +115,5 @@ void		begin_dinner(t_table *table);
 void		*monitor_death(void *data);
 bool		everyman_threads(pthread_mutex_t *mutex, long *threads, long man);
 bool		dead_man(t_man *man);
+void		clean(t_table *table);
 #endif

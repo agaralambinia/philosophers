@@ -7,7 +7,9 @@ SRC = srcs/ft_output.c\
 	  srcs/p_parse_input.c\
 	  srcs/philosophers.c\
 	  srcs/wpaps_dataset.c\
-	  srcs/wraps_thread.c
+	  srcs/wraps_thread.c\
+	  srcs/ft_death.c\
+	  srcs/ft_funcs.c
 
 OBJ = ${SRC:.c=.o}
 

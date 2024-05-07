@@ -22,6 +22,7 @@ A deadlock would occur if the thread blocked waiting for mutex.");
 
 void	ft_mutex(pthread_mutex_t *m, t_code code)
 {
+	//printf("%u\n", code);
 	if (code == LOCK)
 		ft_mutex_error(pthread_mutex_lock(m), code);
 	else if (code == UNLOCK)

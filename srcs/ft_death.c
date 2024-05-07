@@ -7,7 +7,7 @@ bool	everyman_threads(pthread_mutex_t *mutex, long *threads, long man_cnt)
 	result = false;
 	ft_mutex(mutex, LOCK);
 	if (*threads == man_cnt)
-		result == true;
+		result = true;
 	ft_mutex(mutex, UNLOCK);
 	return (result);
 }
@@ -16,8 +16,8 @@ bool	dead_man(t_man *man)
 {
 	if (ft_read_bool(&man->man_mutex, &man->eat_flg))
 		return (false);
-	if (ft_get_time(MSEC) - ft_read_long(&man->man_mutex, \
-		&man->last_dinner_tm) > man->table->die_tm / 1000)
+	if ((ft_get_time(MSEC) - ft_read_long(&man->man_mutex, \
+		&man->last_dinner_tm)) > (man->table->die_tm / 1000))
 		return (true);
 	return (false);
 }
@@ -35,7 +35,7 @@ void	*monitor_death(void *data)
 		i = 0;
 		while (i < table->man_cnt && !dinner_finished(table))
 		{
-			if (dead_man(table->men + i))
+			if (dead_man(table->men + i) == true)
 			{
 				ft_write_bool(&table->table_mutex, &table->end_flg, true);
 				progress_log(DIE, table->men + i, DEBUG_MODE);

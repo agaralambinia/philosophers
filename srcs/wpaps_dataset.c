@@ -10,13 +10,9 @@ void	ft_write_bool(pthread_mutex_t *mutex, bool *dst, bool v)
 bool	ft_read_bool(pthread_mutex_t *mutex, bool *dst)
 {
 	bool	result;
-	//printf("DEBUG wraps_dataset %d\n", __LINE__);
 	ft_mutex(mutex, LOCK);
-	//printf("DEBUG wraps_dataset %d\n", __LINE__);
 	result = *dst;
-	//printf("DEBUG wraps_dataset %d\n", __LINE__);
 	ft_mutex(mutex, UNLOCK);
-	//printf("DEBUG wraps_dataset %d\n", __LINE__);
 	return (result);
 }
 

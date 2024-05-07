@@ -1,29 +1,5 @@
 #include "../incs/philosophers.h"
 
-long	ft_atol(const char *s)
-{
-	long	res;
-
-	res = 0;
-	while (*s >= 48 && *s <= 57)
-	{
-		res = res * 10 - 48 + *s++;
-		if (res > INT_MAX)
-			ft_exit_error("Incorrect input. INT_MAX is limit.");
-	}
-	return (res);
-}
-
-void	*ft_malloc(size_t b)
-{
-	void	*res;
-
-	res = malloc(b);
-	if (res == NULL)
-		ft_exit_error("Malloc error.");
-	return (res);
-}
-
 long	ft_get_time(t_time code)
 {
 	struct timeval	tv;
@@ -48,19 +24,20 @@ void ft_usleep(long usec, t_table *table)
 	long	left;
 
 	spent = 0;
-	asleep = ft_get_time(MSEC);
+	asleep = ft_get_time(USEC);
 	while (spent < usec)
 	{
 		if (dinner_finished(table))
 			break ;
-		spent = ft_get_time(MSEC) - asleep;
+		spent = ft_get_time(USEC) - asleep;
+		//printf("%ld LINE %d\n", spent, __LINE__);
 		left = usec - spent;
 		if (left > 1000)
 			usleep(left / 2);
 		else
 		{
-			while (spent < usec)
-				;
+			while (ft_get_time(USEC) - asleep < usec)
+				 ;
 		}
 	}
 }
@@ -69,4 +46,22 @@ void	wait_beginning(t_table *table)
 {
 	while (!ft_read_bool(&table->table_mutex, &table->men_ready))
 		;
+}
+
+void	clean(t_table *table)
+{
+	t_man	*man;
+	int		i;
+
+	i = 0;
+	while (i < table->man_cnt)
+	{
+		man = table->men + i;
+		ft_mutex(&man->man_mutex, DESTROY);
+		i++;
+	}
+	ft_mutex(&table->write_lock, DESTROY);
+	ft_mutex(&table->table_mutex, DESTROY);
+	free(table->men);
+	free(table->forks);
 }

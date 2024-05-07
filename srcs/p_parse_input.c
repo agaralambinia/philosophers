@@ -24,5 +24,5 @@ void	parse_input(t_table *table, char **argv)
 	if (argv[5])
 		table->meals_cnt = (int)ft_atol(validate_input(argv[5]));
 	else
-		table->meals_cnt = 1;
+		table->meals_cnt = -1;
 }
