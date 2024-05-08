@@ -19,12 +19,12 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 $(OBJDIR)/%.o: %.c
-	${CC} -fsanitize=address ${CFLAGS} -c -o $@
+	${CC} ${CFLAGS} -fsanitize=thread -c -o $@
 
 all: ${DEPS} ${NAME}
 
 ${NAME}: ${OBJ}
-	${CC} -fsanitize=address ${SRC} -o $@ #TODO
+	${CC} -fsanitize=thread ${SRC} -o $@ #TODO
 
 clean:
 	rm -f ${OBJ}

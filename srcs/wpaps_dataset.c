@@ -34,5 +34,8 @@ long	ft_read_long(pthread_mutex_t *mutex, long *dst)
 
 bool	dinner_finished(t_table *table)
 {
-	return (ft_read_bool(&table->table_mutex, &table->end_flg));
+	bool	end_flg;
+
+	end_flg = ft_read_bool(&table->table_mutex, &table->end_flg);
+	return (end_flg);
 }

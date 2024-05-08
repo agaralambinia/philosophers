@@ -27,7 +27,7 @@ void ft_usleep(long usec, t_table *table)
 	asleep = ft_get_time(USEC);
 	while (spent < usec)
 	{
-		if (dinner_finished(table))
+		if (dinner_finished(table) == true)
 			break ;
 		spent = ft_get_time(USEC) - asleep;
 		//printf("%ld LINE %d\n", spent, __LINE__);
@@ -48,20 +48,35 @@ void	wait_beginning(t_table *table)
 		;
 }
 
+void	force_think(t_man *man)
+{
+	if (man->table->man_cnt % 2 == 1)
+	{
+		if (man->man_id % 2 == 1)
+			think(man, true);
+	}
+	else
+	{
+		if (man->man_id % 2 == 0)
+			ft_usleep(man->table->eat_tm / 2, man->table);
+	}
+}
+
+
+
 void	clean(t_table *table)
 {
 	t_man	*man;
 	int		i;
 
-	i = 0;
-	while (i < table->man_cnt)
+	i = -1;
+	while (++i < table->man_cnt)
 	{
 		man = table->men + i;
 		ft_mutex(&man->man_mutex, DESTROY);
-		i++;
 	}
 	ft_mutex(&table->write_lock, DESTROY);
 	ft_mutex(&table->table_mutex, DESTROY);
-	free(table->men);
 	free(table->forks);
+	free(table->men);
 }

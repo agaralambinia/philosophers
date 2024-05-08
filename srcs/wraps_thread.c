@@ -22,7 +22,6 @@ A deadlock would occur if the thread blocked waiting for mutex.");
 
 void	ft_mutex(pthread_mutex_t *m, t_code code)
 {
-	//printf("%u\n", code);
 	if (code == LOCK)
 		ft_mutex_error(pthread_mutex_lock(m), code);
 	else if (code == UNLOCK)
@@ -39,7 +38,6 @@ void	ft_thread_error(int status, t_code code)
 {
 	if (status == 0)
 		return ;
-	
 	if (status == EINVAL && (code == JOIN || code == DETACH))
 		ft_exit_error("The implementation has detected that the value \
 specified by thread does not refer to a joinable thread.");

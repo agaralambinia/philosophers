@@ -17,8 +17,6 @@
 # define YELLOW	"\033[1;33m"
 # define BLUE	"\033[1;34m"
 
-# define DEBUG_MODE	0 //TODO DELETE
-
 typedef enum	e_code
 {
 	INIT,
@@ -68,7 +66,7 @@ typedef struct s_man
 	pthread_mutex_t	man_mutex;
 }	t_man;
 
-typedef struct s_table
+struct s_table
 {
 	long			man_cnt;
 	long			die_tm;
@@ -84,7 +82,7 @@ typedef struct s_table
 	pthread_mutex_t	write_lock;
 	pthread_t		monitor;
 	long			thread_cnt;
-}	t_table;
+};
 
 void		ft_exit_error(char *error);
 char		*incorrect_input_msg(void);
@@ -107,13 +105,14 @@ bool		dinner_finished(t_table *table);
 void		wait_beginning(t_table *table);
 long		ft_get_time(t_time code);
 void		ft_usleep(long usec, t_table *table);
-void		progress_log(t_progress event, t_man *man, bool debug); //TODO DELETE DEBUG
+void		progress_log(t_progress event, t_man *man);
 void 		eat(t_man *man);
-void		think(t_man *man);
+void 		think(t_man *man, bool syncro_flg);
 long		ft_atol(const char *s);
 void		begin_dinner(t_table *table);
 void		*monitor_death(void *data);
 bool		everyman_threads(pthread_mutex_t *mutex, long *threads, long man);
 bool		dead_man(t_man *man);
 void		clean(t_table *table);
+void		force_think(t_man *man);
 #endif

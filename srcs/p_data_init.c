@@ -19,8 +19,8 @@ void	man_init(t_table *table)
 	int	i;
 	t_man *man;
 
-	i = 0;
-	while (i < table->man_cnt)
+	i = -1;
+	while (++i < table->man_cnt)
 	{
 		man = table->men + i;
 		man->meals_cnt = 0;
@@ -29,7 +29,6 @@ void	man_init(t_table *table)
 		man->table = table;
 		ft_mutex(&man->man_mutex, INIT);
 		place_forks(man, table->forks, i);
-		i++;
 	}
 }
 
@@ -37,7 +36,7 @@ void	data_init(t_table *table)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	table->end_flg = false;
 	table->men_ready = false;
 	table->forks = ft_malloc(sizeof(t_fork) * (table->man_cnt));
@@ -45,11 +44,10 @@ void	data_init(t_table *table)
 	table->thread_cnt = 0;
 	ft_mutex(&table->table_mutex, INIT);
 	ft_mutex(&table->write_lock, INIT);
-	while (i < table->man_cnt)
+	while (++i < table->man_cnt)
 	{
 		ft_mutex(&table->forks[i].fork_mutex, INIT);
 		table->forks[i].fork_id = i;
-		i++;
 	}
 	man_init(table);
 }
