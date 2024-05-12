@@ -37,8 +37,7 @@ void *one_man(void *data)
 	man = (t_man *)data;
 	wait_beginning(man->table);
 	ft_write_long(&man->man_mutex, &man->last_dinner_tm, ft_get_time(MSEC));
-	ft_write_long(&man->table->table_mutex, &man->table->thread_cnt, \
-		man->table->thread_cnt + 1);
+	ft_plus_long(&man->table->table_mutex, &man->table->thread_cnt);
 	progress_log(TAKE_FIRST_FORK, man);
 	while (!dinner_finished(man->table))
 		usleep(100);
@@ -52,8 +51,7 @@ void	*dinner(void *data)
 	man = (t_man *)data;
 	wait_beginning(man->table);
 	ft_write_long(&man->man_mutex, &man->last_dinner_tm, ft_get_time(MSEC));
-	ft_write_long(&man->table->table_mutex, &man->table->thread_cnt, \
-		man->table->thread_cnt + 1);
+	ft_plus_long(&man->table->table_mutex, &man->table->thread_cnt);
 	force_think(man);
 	while (!dinner_finished(man->table))
 	{
@@ -79,28 +77,14 @@ void	begin_dinner(t_table *table)
 	else
 	{
 		while (++i < table->man_cnt)
-		{
 			ft_thread(&table->men[i].thread_id, dinner, &table->men[i], CREATE);
-		}
 	}
-	printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
 	ft_thread(&table->monitor, monitor_death, table, CREATE);
-	printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
 	table->start_tm = ft_get_time(MSEC);
-	printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
 	ft_write_bool(&table->table_mutex, &table->men_ready, true);
-	printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
 	i = -1;
-	printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
 	while (++i < table->man_cnt)
-	{
-		printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
 		ft_thread(&table->men[i].thread_id, NULL, NULL, JOIN);
-		printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
-	}
-	printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
 	ft_write_bool(&table->table_mutex, &table->end_flg, true);
-	printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
 	ft_thread(&table->monitor, NULL, NULL, JOIN);
-	printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
 }

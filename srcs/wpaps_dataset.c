@@ -23,6 +23,13 @@ void	ft_write_long(pthread_mutex_t *mutex, long *dst, long v)
 	ft_mutex(mutex, UNLOCK);
 }
 
+void	ft_plus_long(pthread_mutex_t *mutex, long *dst)
+{
+	ft_mutex(mutex, LOCK);
+	(*dst)++;
+	ft_mutex(mutex, UNLOCK);
+}
+
 long	ft_read_long(pthread_mutex_t *mutex, long *dst)
 {
 	long	result;

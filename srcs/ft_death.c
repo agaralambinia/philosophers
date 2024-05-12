@@ -25,14 +25,12 @@ void	*monitor_death(void *data)
 {
 	t_table	*table;
 	int		i;
-	printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
+
 	table = (t_table *)data;
-	printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
 	while (!everyman_threads(&table->table_mutex, &table->thread_cnt, table->man_cnt))
 		;
 	while (!dinner_finished(table))
 	{
-		//printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
 		i = -1;
 		while (++i < table->man_cnt && !dinner_finished(table))
 		{
@@ -43,6 +41,5 @@ void	*monitor_death(void *data)
 			}
 		}
 	}
-	printf("DEBUG	%d	%s\n", __LINE__, __FILE__); //TODO
 	return (NULL);
 }

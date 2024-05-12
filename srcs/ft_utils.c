@@ -30,7 +30,6 @@ void ft_usleep(long usec, t_table *table)
 		if (dinner_finished(table) == true)
 			break ;
 		spent = ft_get_time(USEC) - asleep;
-		//printf("%ld LINE %d\n", spent, __LINE__);
 		left = usec - spent;
 		if (left > 1000)
 			usleep(left / 2);
@@ -61,8 +60,6 @@ void	force_think(t_man *man)
 			ft_usleep(man->table->eat_tm / 2, man->table);
 	}
 }
-
-
 
 void	clean(t_table *table)
 {

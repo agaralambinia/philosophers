@@ -19,8 +19,8 @@ void	parse_input(t_table *table, char **argv)
 	table->die_tm = 1000 * ft_atol(validate_input(argv[2]));
 	table->eat_tm = 1000 * ft_atol(validate_input(argv[3]));
 	table->sleep_tm = 1000 * ft_atol(validate_input(argv[4]));
-	if (table->die_tm < 60000 || table->eat_tm < 60000 || table->sleep_tm < 60000)
-		ft_exit_error("Incorrect input. Timestamp must be > 60ms.");
+	if (table->die_tm < 100000 || table->eat_tm < 100000 || table->sleep_tm < 100000)
+		ft_exit_error("Incorrect input. Timestamp must be > 100ms.");
 	if (argv[5])
 		table->meals_cnt = ft_atol(validate_input(argv[5]));
 	else

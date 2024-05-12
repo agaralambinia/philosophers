@@ -115,4 +115,5 @@ bool		everyman_threads(pthread_mutex_t *mutex, long *threads, long man);
 bool		dead_man(t_man *man);
 void		clean(t_table *table);
 void		force_think(t_man *man);
+void		ft_plus_long(pthread_mutex_t *mutex, long *dst);
 #endif
