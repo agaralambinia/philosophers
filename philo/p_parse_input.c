@@ -16,6 +16,8 @@ const char	*validate_input(const char *s)
 void	parse_input(t_table *table, char **argv)
 {
 	table->man_cnt = ft_atol(validate_input(argv[1]));
+	if (table->man_cnt == 0)
+		ft_exit_error("There can't be 0 philos, it's worthless!");
 	table->die_tm = 1000 * ft_atol(validate_input(argv[2]));
 	table->eat_tm = 1000 * ft_atol(validate_input(argv[3]));
 	table->sleep_tm = 1000 * ft_atol(validate_input(argv[4]));
