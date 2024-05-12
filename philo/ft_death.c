@@ -1,4 +1,4 @@
-#include "../incs/philosophers.h"
+#include "philo.h"
 
 bool	everyman_threads(pthread_mutex_t *mutex, long *threads, long man_cnt)
 {
@@ -16,7 +16,7 @@ bool	dead_man(t_man *man)
 {
 	if (ft_read_bool(&man->man_mutex, &man->eat_flg))
 		return (false);
-	if ((ft_get_time(MSEC) - ft_read_long(&man->man_mutex, &man->last_dinner_tm)) > (man->table->die_tm / 1000))
+	if (ft_get_time(MSEC) - (ft_read_long(&man->man_mutex, &man->last_dinner_tm)) > ((man->table->die_tm) / 1000))
 		return (true);
 	return (false);
 }

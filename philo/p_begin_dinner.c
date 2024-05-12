@@ -1,10 +1,10 @@
-#include "../incs/philosophers.h"
+#include "philo.h"
 
 void 	eat(t_man *man)
 {
-	ft_mutex(&man->left_fork->fork_mutex, LOCK);
+	ft_mutex(&man->lf->fork_mutex, LOCK);
 	progress_log(TAKE_FIRST_FORK, man);
-	ft_mutex(&man->right_fork->fork_mutex, LOCK);
+	ft_mutex(&man->rf->fork_mutex, LOCK);
 	progress_log(TAKE_SECOND_FORK, man);
 	ft_write_long(&man->man_mutex, &man->last_dinner_tm, ft_get_time(MSEC));
 	progress_log(EAT, man);
@@ -12,8 +12,8 @@ void 	eat(t_man *man)
 	ft_usleep((man->table->eat_tm), man->table);
 	if (man->meals_cnt == man->table->meals_cnt)
 		ft_write_bool(&man->man_mutex, &man->eat_flg, true);
-	ft_mutex(&man->left_fork->fork_mutex, UNLOCK);
-	ft_mutex(&man->right_fork->fork_mutex, UNLOCK);
+	ft_mutex(&man->lf->fork_mutex, UNLOCK);
+	ft_mutex(&man->rf->fork_mutex, UNLOCK);
 }
 
 void 	think(t_man *man, bool syncro_flg)

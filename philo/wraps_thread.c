@@ -1,4 +1,4 @@
-#include "../incs/philosophers.h"
+#include "philo.h"
 
 void	ft_mutex_error(int status, t_code code)
 {

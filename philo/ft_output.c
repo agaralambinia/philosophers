@@ -1,4 +1,4 @@
-#include "../incs/philosophers.h"
+#include "philo.h"
 
 void	ft_exit_error(char *error)
 {
@@ -24,15 +24,15 @@ void	progress_log(t_progress event, t_man *man)
 	if (!dinner_finished(man->table))
 	{
 		if (event == TAKE_FIRST_FORK || event == TAKE_SECOND_FORK)
-			printf("%-10ld" PINK"%ld has taken a fork\n"RESET, spent, man->man_id);
+			printf("%ld"PINK"	%ld has taken a fork\n"RESET, spent, man->man_id);
 		else if (event == EAT)
-			printf("%-10ld" YELLOW"%ld is eating\n"RESET, spent, man->man_id);
+			printf("%ld"YELLOW"	%ld is eating\n"RESET, spent, man->man_id);
 		else if (event == SLEEP)
-			printf("%-10ld" BLUE"%ld is sleeping\n"RESET, spent, man->man_id);
+			printf("%ld"BLUE"	%ld is sleeping\n"RESET, spent, man->man_id);
 		else if (event == THINK)
-			printf("%-10ld" GREEN"%ld is thinking\n"RESET, spent, man->man_id);
+			printf("%ld"GREEN"	%ld is thinking\n"RESET, spent, man->man_id);
 	}
 	else if (event == DIE)
-		printf("%-10ld" RED"%ld DIED\n"RESET, spent, man->man_id);
+		printf("%ld"RED"	%ld died\n"RESET, spent, man->man_id);
 	ft_mutex(&man->table->write_lock, UNLOCK);
 }

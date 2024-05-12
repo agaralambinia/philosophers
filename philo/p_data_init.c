@@ -1,16 +1,16 @@
-#include "../incs/philosophers.h"
+#include "philo.h"
 
 void	place_forks(t_man *man, t_fork *forks, int seat)
 {
 	if (man->man_id % 2 == 0)
 	{
-		man->right_fork = &forks[seat];
-		man->left_fork = &forks[(seat + 1) % (man->table->man_cnt)];
+		man->rf = &forks[seat];
+		man->lf = &forks[(seat + 1) % (man->table->man_cnt)];
 	}
 	else
 	{
-		man->right_fork = &forks[(seat + 1) % (man->table->man_cnt)];
-		man->left_fork = &forks[seat];
+		man->rf = &forks[(seat + 1) % (man->table->man_cnt)];
+		man->lf = &forks[seat];
 	}
 }
 

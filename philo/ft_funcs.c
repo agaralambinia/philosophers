@@ -1,4 +1,4 @@
-#include "../incs/philosophers.h"
+#include "philo.h"
 
 long	ft_atol(const char *s)
 {

@@ -1,5 +1,5 @@
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#ifndef PHILO_H
+# define PHILO_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -59,8 +59,8 @@ typedef struct s_man
 	long			meals_cnt;
 	bool			eat_flg;
 	long			last_dinner_tm;
-	t_fork			*left_fork;
-	t_fork			*right_fork;
+	t_fork			*lf;
+	t_fork			*rf;
 	pthread_t		thread_id;
 	t_table			*table;
 	pthread_mutex_t	man_mutex;

@@ -1,4 +1,4 @@
-#include "../incs/philosophers.h"
+#include "philo.h"
 
 void	ft_write_bool(pthread_mutex_t *mutex, bool *dst, bool v)
 {
