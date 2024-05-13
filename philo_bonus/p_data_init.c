@@ -13,7 +13,7 @@ const char	*validate_input(const char *s)
 	return (s);
 }
 
-t_man *data_init(int argc, char **argv)
+t_man *data_init(char **argv)
 {
 	t_man	*temp;
 
@@ -22,30 +22,30 @@ t_man *data_init(int argc, char **argv)
 	if (temp->man_cnt == 0)
 		ft_exit_error("There can't be 0 philos, it's worthless!");
 	temp->fork_cnt = temp->man_cnt;
-	temp->t_die = ft_atol(validate_input(argv[2]));
-	temp->t_eat = ft_atol(validate_input(argv[3]));
-	temp->t_sleep = ft_atol(validate_input(argv[4]));
+	temp->die_tm = 1000 * ft_atol(validate_input(argv[2]));
+	temp->eat_tm = 1000 * ft_atol(validate_input(argv[3]));
+	temp->sleep_tm = 1000 * ft_atol(validate_input(argv[4]));
 	if (argv[5])
-		table->meals_cnt = ft_atol(validate_input(argv[5]));
+		temp->meals_cnt = ft_atol(validate_input(argv[5]));
 	else
-		table->meals_cnt = -1;
+		temp->meals_cnt = -1;
 	temp->eaten_meals_cnt = 0;
-	temp->stop = 0;
+	temp->finish_flg = false;
+	temp->die_flg = false;
 	return (temp);
 }
 
-t_man	*man_init(int argc, char **argv)
+t_man	*man_init(char **argv)
 {
 	t_man	*temp;
 
-	temp = data_init(argc, argv);
-	temp->pid = ft_malloc(sizeof(long) * temp->num_forks);
-	sem_unlink("/block_print"); //TODO
-	sem_unlink("/block_forks"); //TODO
-	temp->block_printf = sem_open("/block_print", O_CREAT, 0644, 1);
-	temp->block_fork = sem_open("/block_forks", O_CREAT, \
-								0644, temp->num_forks);
-	if (temp->block_printf <= 0 || temp->block_fork <= 0)
-		ft_error("Error: semaphore open error");
+	temp = data_init(argv);
+	temp->pid = ft_malloc(sizeof(long) * temp->fork_cnt);
+	sem_unlink("out");
+	sem_unlink("fork");
+	temp->out = sem_open("out", O_CREAT, 777, 1);
+	temp->fork = sem_open("fork", O_CREAT, 777, temp->fork_cnt);
+	if (temp->out <= 0 || temp->fork <= 0)
+		ft_exit_error("Semaphore open error");
 	return (temp);
 }
