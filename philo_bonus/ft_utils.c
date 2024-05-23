@@ -35,7 +35,6 @@ void ft_usleep(long usec, t_man *man)
 {
 	long	asleep;
 	long	spent;
-	long	left;
 
 	spent = 0;
 	asleep = ft_get_time(USEC);
@@ -44,9 +43,8 @@ void ft_usleep(long usec, t_man *man)
 		if (man->finish_flg == true)
 			break ;
 		spent = ft_get_time(USEC) - asleep;
-		left = usec - spent;
-		if (left > 1000)
-			usleep(left / 2);
+		if ((usec - spent) > 1000)
+			usleep((usec - spent) / 2);
 		else
 		{
 			while (ft_get_time(USEC) - asleep < usec)

@@ -9,15 +9,24 @@ int	main(int argc, char **argv)
 	{
 		man = man_init(argv);
 		i = -1;
-		man->start_tm = ft_get_time(MSEC);
+		printf("DEBUG	%d	%s\n", __LINE__, __FILE__);
+		man->start_tm = ft_get_time(USEC);
+		printf("DEBUG	%d	%s\n", __LINE__, __FILE__);
 		while (++i < man->man_cnt)
 		{
+			printf("DEBUG	%d	%s\n", __LINE__, __FILE__);
 			man->pid[i] = fork();
 			if (man->pid[i] == -1)
 				ft_exit_error("Fork mistake");
-			man->man_id = i + 1;
-			man->eat_tm = ft_get_time(MSEC);
-			begin_dinner(man);
+			if (man->pid[i] == 0)
+			{
+				printf("DEBUG	%d	%s\n", __LINE__, __FILE__);
+				man->man_id = i + 1;
+				man->eat_tm = ft_get_time(USEC);
+				printf("DEBUG	%d	%s\n", __LINE__, __FILE__);
+				begin_dinner(man);
+				printf("DEBUG	%d	%s\n", __LINE__, __FILE__);
+			}
 		}
 	clean(&man);
 	}

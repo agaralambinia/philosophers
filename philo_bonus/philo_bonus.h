@@ -52,7 +52,6 @@ typedef struct s_man
 	long			sleep_tm;
 	long			meals_cnt;
 	long			eaten_meals_cnt;
-	bool			eat_flg;
 	bool			finish_flg;
 	bool			die_flg;
 	long			*pid;
@@ -60,7 +59,7 @@ typedef struct s_man
 	sem_t			*fork;
 	long			start_tm;
 	long			man_id;
-	long long int	last_dinner_tm;
+	long			last_dinner_tm;
 	pthread_t		monitor;
 }	t_man;
 
@@ -71,10 +70,7 @@ t_man 		*data_init(char **argv);
 void		*ft_malloc(size_t b);
 long		ft_atol(const char *s);
 void		progress_log(t_progress event, t_man *man);
-void		ft_thread_error(int status, t_code code);
-void		ft_thread(pthread_t *t, void *(*f)(void *), void *val, t_code code);
 void		begin_dinner(t_man *man);
-void		force_think(t_man *man);
 void 		ft_usleep(long usec, t_man *man);
 void		*monitor(void *data);
 void		clean(t_man **man);

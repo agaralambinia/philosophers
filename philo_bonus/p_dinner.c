@@ -1,28 +1,15 @@
 #include "philo_bonus.h"
 
-void	force_think(t_man *man)
-{
-	long	think_tm;
-
-	think_tm = (man->eat_tm) * 2 - (man->sleep_tm);
-	if (think_tm < 0)
-		think_tm = 0;
-	if (man->man_cnt % 2 == 1)
-	{
-		if (man->man_id % 2 == 1)
-			ft_usleep(think_tm / 2, man);
-	}
-	else
-	{
-		if (man->man_id % 2 == 1)
-			ft_usleep(man->eat_tm / 2, man);
-	}
-}
-
 void	begin_dinner(t_man *man)
 {
-	ft_thread(&man->monitor, NULL, monitor, CREATE);
-	force_think(man);
+	printf("DEBUG	%d	%s\n", __LINE__, __FILE__);
+	if (pthread_create(&man->monitor, \
+			NULL, &monitor, man))
+		ft_exit_error("Failed to create thread");
+	printf("DEBUG	%d	%s\n", __LINE__, __FILE__);
+	if (man->man_id % 2 == 1)
+		usleep(500);
+	printf("DEBUG	%d	%s\n", __LINE__, __FILE__);
 	while (1)
 	{
 		progress_log(THINK, man);
@@ -31,15 +18,17 @@ void	begin_dinner(t_man *man)
 		sem_wait(man->fork);
 		progress_log(TAKE_FIRST_FORK, man);
 		progress_log(EAT, man);
-		ft_usleep(man->eat_tm, man);
-		man->eat_tm = ft_get_time(MSEC);
+		ft_usleep(man->eat_tm * 1000, man);
+		printf("DEBUG	%d	%s\n", __LINE__, __FILE__);
+		man->last_dinner_tm = ft_get_time(MSEC);
 		sem_post(man->fork);
 		sem_post(man->fork);
 		man->eaten_meals_cnt += 1;
 		progress_log(SLEEP, man);
-		ft_usleep(man->sleep_tm, man);
+		ft_usleep(man->sleep_tm * 1000, man);
 	}
-	ft_thread(&man->monitor, NULL, NULL, JOIN);
+	if (pthread_join(man->monitor, NULL))
+		ft_exit_error("Failed to join thread");
 }
 
 void	clean(t_man **man)
@@ -77,10 +66,11 @@ void	*monitor(void *data)
 	man = (t_man *)data;
 	while (!man->finish_flg)
 	{
-		usleep(60);
-		if (ft_get_time(MSEC) - (man->eat_tm * 1000) > man->die_tm)
+		usleep(100);
+		if (ft_get_time(MSEC) - (man->eat_tm) > man->die_tm)
 		{
 			man->die_flg = true;
+			sem_wait(man->out);
 			progress_log(DIE, man);
 			man->finish_flg = true;
 			break ;

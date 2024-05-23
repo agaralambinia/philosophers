@@ -15,12 +15,12 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 .c.o:
-	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+	${CC} ${CFLAGS} -fsanitize=address -c $< -o ${<:.c=.o}
 
 all: ${DEPS} ${NAME}
 
 ${NAME}: ${OBJ}
-	${CC} ${SRC} -o $@
+	${CC} -fsanitize=address ${SRC} -o $@
 
 clean:
 	rm -f ${OBJ}
