@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: defimova <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/23 19:47:59 by defimova          #+#    #+#             */
+/*   Updated: 2024/06/23 19:48:01 by defimova         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-long	ft_get_time(t_time code)
+long	ft_gettm(t_time code)
 {
 	struct timeval	tv;
 
@@ -17,26 +29,26 @@ long	ft_get_time(t_time code)
 	return (-1);
 }
 
-void ft_usleep(long usec, t_table *table)
+void	ft_usleep(long usec, t_table *table)
 {
 	long	asleep;
 	long	spent;
 	long	left;
 
 	spent = 0;
-	asleep = ft_get_time(USEC);
+	asleep = ft_gettm(USEC);
 	while (spent < usec)
 	{
 		if (dinner_finished(table) == true)
 			break ;
-		spent = ft_get_time(USEC) - asleep;
+		spent = ft_gettm(USEC) - asleep;
 		left = usec - spent;
 		if (left > 1000)
 			usleep(left / 2);
 		else
 		{
-			while (ft_get_time(USEC) - asleep < usec)
-				 ;
+			while (ft_gettm(USEC) - asleep < usec)
+				;
 		}
 	}
 }

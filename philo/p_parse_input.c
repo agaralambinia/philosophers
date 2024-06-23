@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   p_parse_input.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: defimova <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/23 19:50:49 by defimova          #+#    #+#             */
+/*   Updated: 2024/06/23 19:50:51 by defimova         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 const char	*validate_input(const char *s)
@@ -21,7 +33,8 @@ void	parse_input(t_table *table, char **argv)
 	table->die_tm = 1000 * ft_atol(validate_input(argv[2]));
 	table->eat_tm = 1000 * ft_atol(validate_input(argv[3]));
 	table->sleep_tm = 1000 * ft_atol(validate_input(argv[4]));
-	if (table->die_tm < 60000 || table->eat_tm < 60000 || table->sleep_tm < 60000)
+	if (table->die_tm < 60000 || table->eat_tm < 60000
+		|| table->sleep_tm < 60000)
 		ft_exit_error("Incorrect input. Timestamp must be > 60ms.");
 	if (argv[5])
 		table->meals_cnt = ft_atol(validate_input(argv[5]));

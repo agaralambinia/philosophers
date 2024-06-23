@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   p_data_init.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: defimova <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/23 19:50:40 by defimova          #+#    #+#             */
+/*   Updated: 2024/06/23 19:50:42 by defimova         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	place_forks(t_man *man, t_fork *forks, int seat)
@@ -16,8 +28,8 @@ void	place_forks(t_man *man, t_fork *forks, int seat)
 
 void	man_init(t_table *table)
 {
-	int	i;
-	t_man *man;
+	int		i;
+	t_man	*man;
 
 	i = -1;
 	while (++i < table->man_cnt)

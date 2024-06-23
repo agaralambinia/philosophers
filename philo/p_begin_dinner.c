@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   p_begin_dinner.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: defimova <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/23 19:50:21 by defimova          #+#    #+#             */
+/*   Updated: 2024/06/23 19:50:29 by defimova         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void 	eat(t_man *man)
+void	eat(t_man *man)
 {
 	ft_mutex(&man->lf->fork_mutex, LOCK);
 	progress_log(TAKE_FIRST_FORK, man);
 	ft_mutex(&man->rf->fork_mutex, LOCK);
 	progress_log(TAKE_SECOND_FORK, man);
-	ft_write_long(&man->man_mutex, &man->last_dinner_tm, ft_get_time(MSEC));
+	ft_write_long(&man->man_mutex, &man->last_d_tm, ft_gettm(MSEC));
 	progress_log(EAT, man);
 	man->meals_cnt++;
 	ft_usleep((man->table->eat_tm), man->table);
@@ -16,7 +28,7 @@ void 	eat(t_man *man)
 	ft_mutex(&man->rf->fork_mutex, UNLOCK);
 }
 
-void 	think(t_man *man, bool syncro_flg)
+void	think(t_man *man, bool syncro_flg)
 {
 	long	think_tm;
 
@@ -30,13 +42,13 @@ void 	think(t_man *man, bool syncro_flg)
 	ft_usleep(think_tm / 2, man->table);
 }
 
-void *one_man(void *data)
+void	*one_man(void *data)
 {
 	t_man	*man;
 
 	man = (t_man *)data;
 	wait_beginning(man->table);
-	ft_write_long(&man->man_mutex, &man->last_dinner_tm, ft_get_time(MSEC));
+	ft_write_long(&man->man_mutex, &man->last_d_tm, ft_gettm(MSEC));
 	ft_plus_long(&man->table->table_mutex, &man->table->thread_cnt);
 	progress_log(TAKE_FIRST_FORK, man);
 	while (!dinner_finished(man->table))
@@ -46,11 +58,11 @@ void *one_man(void *data)
 
 void	*dinner(void *data)
 {
-	t_man *man;
+	t_man	*man;
 
 	man = (t_man *)data;
 	wait_beginning(man->table);
-	ft_write_long(&man->man_mutex, &man->last_dinner_tm, ft_get_time(MSEC));
+	ft_write_long(&man->man_mutex, &man->last_d_tm, ft_gettm(MSEC));
 	ft_plus_long(&man->table->table_mutex, &man->table->thread_cnt);
 	force_think(man);
 	while (!dinner_finished(man->table))
@@ -80,7 +92,7 @@ void	begin_dinner(t_table *table)
 			ft_thread(&table->men[i].thread_id, dinner, &table->men[i], CREATE);
 	}
 	ft_thread(&table->monitor, monitor_death, table, CREATE);
-	table->start_tm = ft_get_time(MSEC);
+	table->start_tm = ft_gettm(MSEC);
 	ft_write_bool(&table->table_mutex, &table->men_ready, true);
 	i = -1;
 	while (++i < table->man_cnt)

@@ -6,7 +6,7 @@ SRC = ft_output.c\
 	  p_data_init.c\
 	  p_parse_input.c\
 	  philo.c\
-	  wpaps_dataset.c\
+	  wraps_dataset.c\
 	  wraps_thread.c\
 	  ft_death.c\
 	  ft_funcs.c

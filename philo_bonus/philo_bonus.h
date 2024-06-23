@@ -1,5 +1,17 @@
-#ifndef philo_bonus_H
-# define philo_bonus_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: defimova <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/23 19:55:34 by defimova          #+#    #+#             */
+/*   Updated: 2024/06/23 19:55:36 by defimova         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -25,7 +37,7 @@
 # define SWRITE "/write"
 # define SDIE "/die"
 
-typedef enum	e_progress
+typedef enum e_progress
 {
 	EAT,
 	SLEEP,
@@ -35,7 +47,7 @@ typedef enum	e_progress
 	DIE,
 }	t_progress;
 
-typedef enum	e_time
+typedef enum e_time
 {
 	SEC,
 	MSEC,

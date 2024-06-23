@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: defimova <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/23 19:51:08 by defimova          #+#    #+#             */
+/*   Updated: 2024/06/23 19:51:10 by defimova         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -10,14 +22,14 @@
 # include <limits.h>
 # include <errno.h>
 
-# define RESET	"\033[0m"
+# define R	"\033[0m"
 # define RED	"\033[1;31m"
 # define PINK	"\033[1;35m"
 # define GREEN	"\033[1;32m"
 # define YELLOW	"\033[1;33m"
 # define BLUE	"\033[1;34m"
 
-typedef enum	e_code
+typedef enum e_code
 {
 	INIT,
 	LOCK,
@@ -28,14 +40,14 @@ typedef enum	e_code
 	JOIN,
 }	t_code;
 
-typedef enum	e_time
+typedef enum e_time
 {
 	SEC,
 	MSEC,
 	USEC,
 }	t_time;
 
-typedef enum	e_progress
+typedef enum e_progress
 {
 	EAT,
 	SLEEP,
@@ -45,7 +57,7 @@ typedef enum	e_progress
 	DIE,
 }	t_progress;
 
-typedef struct s_table t_table;
+typedef struct s_table	t_table;
 
 typedef struct s_fork
 {
@@ -58,7 +70,7 @@ typedef struct s_man
 	long			man_id;
 	long			meals_cnt;
 	bool			eat_flg;
-	long			last_dinner_tm;
+	long			last_d_tm;
 	t_fork			*lf;
 	t_fork			*rf;
 	pthread_t		thread_id;
@@ -103,15 +115,15 @@ void		ft_write_long(pthread_mutex_t *mutex, long *dst, long v);
 long		ft_read_long(pthread_mutex_t *mutex, long *dst);
 bool		dinner_finished(t_table *table);
 void		wait_beginning(t_table *table);
-long		ft_get_time(t_time code);
+long		ft_gettm(t_time code);
 void		ft_usleep(long usec, t_table *table);
 void		progress_log(t_progress event, t_man *man);
-void 		eat(t_man *man);
-void 		think(t_man *man, bool syncro_flg);
+void		eat(t_man *man);
+void		think(t_man *man, bool syncro_flg);
 long		ft_atol(const char *s);
 void		begin_dinner(t_table *table);
 void		*monitor_death(void *data);
-bool		everyman_threads(pthread_mutex_t *mutex, long *threads, long man);
+bool		all_thread(pthread_mutex_t *mutex, long *threads, long man);
 bool		dead_man(t_man *man);
 void		clean(t_table *table);
 void		force_think(t_man *man);

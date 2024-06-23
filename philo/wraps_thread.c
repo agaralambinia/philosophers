@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wraps_thread.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: defimova <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/23 19:48:33 by defimova          #+#    #+#             */
+/*   Updated: 2024/06/23 19:48:35 by defimova         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	ft_mutex_error(int status, t_code code)
@@ -45,8 +57,8 @@ specified by thread does not refer to a joinable thread.");
 		ft_exit_error("No thread could be found corresponding to that \
 specified by the given thread ID, thread.");
 	else if (status == EDEADLK && code == JOIN)
-		ft_exit_error("\
-A deadlock was detected or the value of thread specifies the calling thread.");
+		ft_exit_error("A deadlock was detected or the value \
+of thread specifies the calling thread.");
 	else if (status == EAGAIN && code == CREATE)
 		ft_exit_error("The system lacked the necessary resources to create \
 another thread, or the system-imposed limit on the total number of threads in \
