@@ -54,7 +54,7 @@ void	*monitor(t_man *man)
 {
 	while (true)
 	{
-		if (check_die(man) == 1 || check_eat(man) == 1)
+		if (check_eat(man) == 1 || check_die(man) == 1)
 			break ;
 	}
 	return (NULL);

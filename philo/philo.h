@@ -36,7 +36,6 @@ typedef enum e_code
 	UNLOCK,
 	CREATE,
 	DESTROY,
-	DETACH,
 	JOIN,
 }	t_code;
 

@@ -50,10 +50,10 @@ void	ft_thread_error(int status, t_code code)
 {
 	if (status == 0)
 		return ;
-	if (status == EINVAL && (code == JOIN || code == DETACH))
+	if (status == EINVAL && (code == JOIN))
 		ft_exit_error("The implementation has detected that the value \
 specified by thread does not refer to a joinable thread.");
-	else if (status == ESRCH && (code == JOIN || code == DETACH))
+	else if (status == ESRCH && (code == JOIN))
 		ft_exit_error("No thread could be found corresponding to that \
 specified by the given thread ID, thread.");
 	else if (status == EDEADLK && code == JOIN)
@@ -74,8 +74,6 @@ void	ft_thread(pthread_t *t, void *(*f)(void *), void *val, t_code code)
 {
 	if (code == JOIN)
 		ft_thread_error(pthread_join(*t, NULL), code);
-	else if (code == DETACH)
-		ft_thread_error(pthread_detach(*t), code);
 	else if (code == CREATE)
 		ft_thread_error(pthread_create(t, NULL, f, val), code);
 	else

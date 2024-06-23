@@ -24,9 +24,9 @@ int	death_check(t_man *man)
 
 void	*ft_dinner(t_man *man)
 {
-	pthread_create(&man->thread, NULL, (void *)monitor, man);
 	set_lasteat(man);
 	man->table->start_tm = ft_get_time(USEC);
+	pthread_create(&man->thread, NULL, (void *)monitor, man);
 	while (1)
 	{
 		sem_wait(man->table->forks);
@@ -39,6 +39,7 @@ void	*ft_dinner(t_man *man)
 		sem_post(man->table->forks);
 		sem_wait(man->table->s_eat);
 		man->meal_counter++;
+		set_lasteat(man);
 		sem_post(man->table->s_eat);
 		progress_log(SLEEP, man);
 		set_lasteat(man);
