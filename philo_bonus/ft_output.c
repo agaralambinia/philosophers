@@ -2,7 +2,7 @@
 
 void	ft_exit_error(char *error)
 {
-	printf(RED"%s\n"RESET, error);
+	printf(RED"%s\n"R, error);
 	exit(EXIT_FAILURE);
 }
 
@@ -11,26 +11,27 @@ char	*incorrect_input_msg(void)
 	return ("Incorrect input. Provide\n\
  * number_of_philosophers\n * time_to_die\n\
  * time_to_eat\n * time_to_sleep\n\
- * number_of_times_each_philosopher_must_eat (optional)");
+ * number_of_tms_each_philosopher_meals_cnt (optional)");
 }
 
 void	progress_log(t_progress event, t_man *man)
 {
-	long	spent;
-	spent = ft_get_time(USEC) - man->start_tm;
-	sem_wait(man->out);
-	if (!man->finish_flg)
+	long	s;
+
+	sem_wait(man->table->s_write);
+	s = ft_get_time(USEC) - man->table->start_tm;
+	if (!death_check(man))
 	{
 		if (event == TAKE_FIRST_FORK || event == TAKE_SECOND_FORK)
-			printf("%ld"PINK"	%ld has taken a fork\n"RESET, spent / 1000, man->man_id);
+			printf(PINK"%ld	%d has taken a fork\n"R, s / 1000, man->id + 1);
 		else if (event == EAT)
-			printf("%ld"YELLOW"	%ld is eating\n"RESET, spent / 1000, man->man_id);
+			printf(YELLOW"%ld	%d is eating\n"R, s / 1000, man->id + 1);
 		else if (event == SLEEP)
-			printf("%ld"BLUE"	%ld is sleeping\n"RESET, spent / 1000, man->man_id);
+			printf(BLUE"%ld	%d is sleeping\n"R, s / 1000, man->id + 1);
 		else if (event == THINK)
-			printf("%ld"GREEN"	%ld is thinking\n"RESET, spent / 1000, man->man_id);
+			printf(GREEN"%ld	%d is thinking\n"R, s / 1000, man->id + 1);
 	}
 	else if (event == DIE)
-		printf("%ld"RED"	%ld died\n"RESET, spent / 1000, man->man_id);
-	sem_post(man->out);
+		printf(RED"%ld	%d died\n"R, s / 1000, man->id + 1);
+	sem_post(man->table->s_write);
 }

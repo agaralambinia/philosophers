@@ -1,20 +1,10 @@
 #include "philo_bonus.h"
 
-long	ft_get_time(t_time code)
+int	ft_isdigit(int c)
 {
-	struct timeval	tv;
-
-	if (gettimeofday(&tv, NULL) == -1)
-		ft_exit_error("Error: gettimeofday function failed.");
-	if (code == SEC)
-		return (tv.tv_sec + (tv.tv_usec / 1000000));
-	else if (code == MSEC)
-		return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-	else if (code == USEC)
-		return ((tv.tv_sec * 1000000) + tv.tv_usec);
-	else
-		ft_exit_error("Error: gettimeofday mistake");
-	return (-1);
+	if ((c >= 48 && c <= 57))
+		return (1);
+	return (0);
 }
 
 long	ft_atol(const char *s)
@@ -31,24 +21,38 @@ long	ft_atol(const char *s)
 	return (res);
 }
 
-void ft_usleep(long usec, t_man *man)
+long	ft_get_time(t_time code)
 {
-	long	asleep;
-	long	spent;
+	struct timeval		tv;
 
-	spent = 0;
-	asleep = ft_get_time(USEC);
-	while (spent < usec)
-	{
-		if (man->finish_flg == true)
-			break ;
-		spent = ft_get_time(USEC) - asleep;
-		if ((usec - spent) > 1000)
-			usleep((usec - spent) / 2);
-		else
-		{
-			while (ft_get_time(USEC) - asleep < usec)
-				 ;
-		}
-	}
+	if (gettimeofday(&tv, NULL) == -1)
+		ft_exit_error("Error: gettimeofday function failed.");
+	if (code == SEC)
+		return (tv.tv_sec + (tv.tv_usec / 1000000));
+	else if (code == MSEC)
+		return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	else if (code == USEC)
+		return ((tv.tv_sec * 1000000) + tv.tv_usec);
+	else
+		ft_exit_error("Error: gettimeofday mistake");
+	return (-1);
+}
+
+void	ft_sleep(long long tm)
+{
+	long long	start;
+
+	start = ft_get_time(MSEC);
+	while (ft_get_time(MSEC) - start <= tm)
+		usleep(500);
+}
+
+void	*ft_malloc(size_t b)
+{
+	void	*res;
+
+	res = malloc(b);
+	if (res == NULL)
+		ft_exit_error("Malloc error.");
+	return (res);
 }

@@ -1,11 +1,12 @@
 NAME = philo_bonus
 
-SRC = ft_output.c\
-	  ft_utils.c\
-	  p_data_init.c\
-	  p_dinner.c\
+SRC = monitoring.c\
+	  data_init.c\
 	  philo_bonus.c\
-	  wraps.c
+	  p_dinner.c\
+	  parse_input.c\
+	  ft_utils.c\
+	  ft_output.c
 
 OBJ = ${SRC:.c=.o}
 
