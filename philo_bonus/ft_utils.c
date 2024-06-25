@@ -33,38 +33,28 @@ long	ft_atol(const char *s)
 	return (res);
 }
 
-long	ft_get_time(t_time code)
+long	ft_time(void)
 {
 	struct timeval		tv;
 
 	if (gettimeofday(&tv, NULL) == -1)
 		ft_exit_error("Error: gettimeofday function failed.");
-	if (code == SEC)
-		return (tv.tv_sec + (tv.tv_usec / 1000000));
-	else if (code == MSEC)
-		return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-	else if (code == USEC)
-		return ((tv.tv_sec * 1000000) + tv.tv_usec);
-	else
-		ft_exit_error("Error: gettimeofday mistake");
-	return (-1);
+	return (tv.tv_sec * 1000 * 1000 + tv.tv_usec);
 }
 
-void	ft_sleep(long long tm)
+void	ft_sleep(long tm)
 {
-	long long	start;
+	long	asleep;
 
-	start = ft_get_time(MSEC);
-	while (ft_get_time(MSEC) - start <= tm)
-		usleep(500);
-}
-
-void	*ft_malloc(size_t b)
-{
-	void	*res;
-
-	res = malloc(b);
-	if (res == NULL)
-		ft_exit_error("Malloc error.");
-	return (res);
+	asleep = ft_time();
+	while (ft_time() - asleep < tm * 1000)
+	{
+		if (ft_time() - asleep > 10000)
+			usleep((ft_time() - asleep) / 2);
+		else
+		{
+			while (ft_time() - asleep < tm * 1000)
+				;
+		}
+	}
 }

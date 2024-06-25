@@ -12,15 +12,16 @@
 
 #include "philo_bonus.h"
 
-static int	check_die(t_man *man)
+static int	death_monitor(t_man *man)
 {
 	sem_wait(man->table->s_lasteat);
-	if (ft_get_time(MSEC) - man->lasteat >= man->table->die_tm)
+	if ((ft_time() - man->lasteat) / 1000 >= man->table->die_tm)
 	{
 		sem_wait(man->table->s_die);
 		man->table->dead_flg = true;
-		sem_post(man->table->s_die);
+		sem_wait(man->table->s_write);
 		progress_log(DIE, man);
+		sem_post(man->table->s_die);
 		sem_post(man->table->s_lasteat);
 		exit(1);
 	}
@@ -28,7 +29,7 @@ static int	check_die(t_man *man)
 	return (0);
 }
 
-static int	check_eat(t_man *man)
+static int	fill_monitor(t_man *man)
 {
 	sem_wait(man->table->s_eat);
 	if (man->meal_counter == man->table->meals_cnt)
@@ -37,24 +38,24 @@ static int	check_eat(t_man *man)
 		man->table->dead_flg = true;
 		sem_post(man->table->s_die);
 		sem_post(man->table->s_eat);
-		exit (0);
+		exit (1);
 	}
 	sem_post(man->table->s_eat);
 	return (0);
 }
 
-void	set_lasteat(t_man *p)
+void	set_lasteat(t_man *man)
 {
-	sem_wait(p->table->s_lasteat);
-	p->lasteat = ft_get_time(MSEC);
-	sem_post(p->table->s_lasteat);
+	sem_wait(man->table->s_lasteat);
+	man->lasteat = ft_time();
+	sem_post(man->table->s_lasteat);
 }
 
 void	*monitor(t_man *man)
 {
 	while (true)
 	{
-		if (check_eat(man) == 1 || check_die(man) == 1)
+		if (fill_monitor(man) == 1 || death_monitor(man) == 1)
 			break ;
 	}
 	return (NULL);

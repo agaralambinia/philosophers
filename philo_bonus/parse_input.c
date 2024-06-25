@@ -25,16 +25,16 @@ static const char	*validate_input(const char *s)
 	return (s);
 }
 
-void	parse_input(int argc, char *argv[], t_table *table)
+void	parse_input(int argc, char **argv, t_table *table)
 {
 	if (argc < 5 || argc > 6)
 		ft_exit_error(incorrect_input_msg());
-	table->man_cnt = ft_atol(validate_input(argv[1]));
+	table->man_cnt = (int)ft_atol(validate_input(argv[1]));
 	table->die_tm = ft_atol(validate_input(argv[2]));
 	table->eat_tm = ft_atol(validate_input(argv[3]));
 	table->sleep_tm = ft_atol(validate_input(argv[4]));
 	if (argc == 6)
-		table->meals_cnt = ft_atol(argv[5]);
+		table->meals_cnt = (int)ft_atol(argv[5]);
 	else
 		table->meals_cnt = -1;
 	if (table->die_tm < 60 || table->eat_tm < 60 || table->sleep_tm < 60)

@@ -13,15 +13,15 @@ OBJ = ${SRC:.c=.o}
 DEPS = philo_bonus.h
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread -g
 
 .c.o:
-	${CC} ${CFLAGS} -fsanitize=address -c $< -o ${<:.c=.o}
+	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 all: ${DEPS} ${NAME}
 
 ${NAME}: ${OBJ}
-	${CC} -fsanitize=address ${SRC} -o $@
+	${CC} ${SRC} -o $@
 
 clean:
 	rm -f ${OBJ}
