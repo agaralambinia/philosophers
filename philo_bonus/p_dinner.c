@@ -12,6 +12,20 @@
 
 #include "philo_bonus.h"
 
+static void	force_think(t_man *man)
+{
+	if (man->table->man_cnt % 2 == 1)
+	{
+		if (man->id % 2 == 1)
+			ft_sleep(man->table->sleep_tm);
+	}
+	else
+	{
+		if (man->id % 2 == 0)
+			ft_sleep(man->table->eat_tm / 2);
+	}
+}
+
 void	*ft_dinner(t_man *man)
 {
 	pthread_create(&man->thread, NULL, (void *)monitor, man);
@@ -22,18 +36,22 @@ void	*ft_dinner(t_man *man)
 		progress_log(TAKE_FORK, man);
 		sem_wait(man->table->forks);
 		progress_log(TAKE_FORK, man);
+		set_lasteat(man);
 		progress_log(EAT, man);
 		ft_sleep(man->table->eat_tm);
 		sem_post(man->table->forks);
 		sem_post(man->table->forks);
-		sem_wait(man->table->s_die);
+		sem_wait(man->table->s_eat);
 		man->meal_counter++;
-		sem_post(man->table->s_die);
+		sem_post(man->table->s_eat);
 		progress_log(SLEEP, man);
 		set_lasteat(man);
 		ft_sleep(man->table->sleep_tm);
 		if (!man->table->dead_flg)
+		{
 			progress_log(THINK, man);
+			force_think(man);
+		}
 	}
 	pthread_join(man->thread, NULL);
 	exit (0);
