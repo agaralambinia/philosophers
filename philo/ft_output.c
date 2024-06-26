@@ -37,13 +37,13 @@ void	progress_log(t_progress event, t_man *man)
 	if (!dinner_finished(man->table))
 	{
 		if (event == TAKE_FIRST_FORK || event == TAKE_SECOND_FORK)
-			printf("%ld"PINK"	%ld has taken a fork\n"R, spent, man->man_id);
+			printf("%ld	%ld has taken a fork\n", spent, man->man_id);
 		else if (event == EAT)
-			printf("%ld"YELLOW"	%ld is eating\n"R, spent, man->man_id);
+			printf("%ld	%ld is eating\n", spent, man->man_id);
 		else if (event == SLEEP)
-			printf("%ld"BLUE"	%ld is sleeping\n"R, spent, man->man_id);
+			printf("%ld	%ld is sleeping\n", spent, man->man_id);
 		else if (event == THINK)
-			printf("%ld"GREEN"	%ld is thinking\n"R, spent, man->man_id);
+			printf("%ld	%ld is thinking\n", spent, man->man_id);
 	}
 	else if (event == DIE)
 		printf("%ld"RED"	%ld died\n"R, spent, man->man_id);

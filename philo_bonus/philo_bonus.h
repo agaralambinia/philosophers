@@ -89,7 +89,7 @@ long	ft_atol(const char *s);
 void	ft_exit_error(char *error);
 void	data_init(t_table *table);
 void	ft_unlink(t_table *table);
-void	begin_dinner(t_table *table);
+void	fork_men(t_table *table);
 char	*incorrect_input_msg(void);
 long	ft_time(void);
 void	ft_sleep(long tm);

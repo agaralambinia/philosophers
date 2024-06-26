@@ -18,5 +18,5 @@ int	main(int argc, char *argv[])
 
 	parse_input(argc, argv, &table);
 	data_init(&table);
-	begin_dinner(&table);
+	fork_men(&table);
 }

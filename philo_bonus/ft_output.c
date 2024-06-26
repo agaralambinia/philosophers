@@ -29,18 +29,23 @@ char	*incorrect_input_msg(void)
 void	progress_log(t_progress event, t_man *man)
 {
 	if (event == DIE)
-		printf(RED"%ld	%d died\n"R, (ft_time() - *(man->start_tm)) / 1000, man->id + 1);
+		printf("%ld	%d died\n",
+			(ft_time() - *(man->start_tm)) / 1000, man->id + 1);
 	else
 	{
 		sem_wait(man->table->s_write);
 		if (event == TAKE_FORK)
-			printf(P"%ld	%d has taken a fork\n"R, (ft_time() - *(man->start_tm)) / 1000, man->id + 1);
+			printf("%ld	%d has taken a fork\n",
+				(ft_time() - *(man->start_tm)) / 1000, man->id + 1);
 		else if (event == EAT)
-			printf(Y"%ld	%d is eating\n"R, (ft_time() - *(man->start_tm)) / 1000, man->id + 1);
+			printf("%ld	%d is eating\n",
+				(ft_time() - *(man->start_tm)) / 1000, man->id + 1);
 		else if (event == SLEEP)
-			printf(B"%ld	%d is sleeping\n"R, (ft_time() - *(man->start_tm)) / 1000, man->id + 1);
+			printf("%ld	%d is sleeping\n",
+				(ft_time() - *(man->start_tm)) / 1000, man->id + 1);
 		else if (event == THINK)
-			printf(G"%ld	%d is thinking\n"R, (ft_time() - *(man->start_tm)) / 1000, man->id + 1);
+			printf("%ld	%d is thinking\n",
+				(ft_time() - *(man->start_tm)) / 1000, man->id + 1);
 	}
 	sem_post(man->table->s_write);
 }

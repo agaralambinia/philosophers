@@ -19,8 +19,9 @@ void	ft_sem_open(t_table *table)
 	table->s_write = sem_open(SWRITE, O_CREAT, 0777, 1);
 	table->s_die = sem_open(SDIE, O_CREAT, 0777, 1);
 	table->s_eat = sem_open(SEAT, O_CREAT, 0777, 1);
-	if (table->s_die == SEM_FAILED || table->forks == SEM_FAILED || table->s_write == SEM_FAILED
-		|| table->s_lasteat == SEM_FAILED ||table->s_die == SEM_FAILED)
+	if (table->s_die == SEM_FAILED || table->forks == SEM_FAILED
+		|| table->s_write == SEM_FAILED || table->s_lasteat == SEM_FAILED
+		|| table->s_die == SEM_FAILED)
 	{
 		free(table->men);
 		ft_exit_error("Semaphore error");

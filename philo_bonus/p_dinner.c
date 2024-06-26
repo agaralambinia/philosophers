@@ -26,16 +26,21 @@ static void	force_think(t_man *man)
 	}
 }
 
+static void	take_forks(t_man *man)
+{
+	sem_wait(man->table->forks);
+	progress_log(TAKE_FORK, man);
+	sem_wait(man->table->forks);
+	progress_log(TAKE_FORK, man);
+}
+
 void	*ft_dinner(t_man *man)
 {
 	pthread_create(&man->thread, NULL, (void *)monitor, man);
 	set_lasteat(man);
 	while (1)
 	{
-		sem_wait(man->table->forks);
-		progress_log(TAKE_FORK, man);
-		sem_wait(man->table->forks);
-		progress_log(TAKE_FORK, man);
+		take_forks(man);
 		set_lasteat(man);
 		progress_log(EAT, man);
 		ft_sleep(man->table->eat_tm);
@@ -57,19 +62,11 @@ void	*ft_dinner(t_man *man)
 	exit (0);
 }
 
-void	begin_dinner(t_table *table)
+static void	begin_dinner(t_table *table)
 {
 	int	i;
 	int	status;
 
-	i = -1;
-	table->start_tm = ft_time();
-	while (++i < table->man_cnt)
-	{
-		table->men[i].pid = fork();
-		if (table->men[i].pid == 0)
-			ft_dinner(&table->men[i]);
-	}
 	i = -1;
 	while (++i < table->man_cnt)
 	{
@@ -84,4 +81,19 @@ void	begin_dinner(t_table *table)
 	}
 	ft_unlink(table);
 	free(table->men);
+}
+
+void	fork_men(t_table *table)
+{
+	int	i;
+
+	i = -1;
+	table->start_tm = ft_time();
+	while (++i < table->man_cnt)
+	{
+		table->men[i].pid = fork();
+		if (table->men[i].pid == 0)
+			ft_dinner(&table->men[i]);
+	}
+	begin_dinner(table);
 }
